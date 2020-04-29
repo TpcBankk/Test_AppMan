@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     ListView listView;
     private PopupWindow mPopupWindow;
-    LinearLayout  layout,popup;
+    LinearLayout  layout;
 
     String Id,Name;
     @Override
@@ -43,14 +43,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         layout = (LinearLayout) findViewById(R.id.LinearLayout1);
-        popup = (LinearLayout) findViewById(R.id.popup);
 
 
         getNameList();
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null)
         {
-            //Setting a dynamic title at runtime. Here, it displays the current time.
             actionBar.setTitle("Id: "+ Id +" Name: " + Name);
         }
 
@@ -62,10 +60,8 @@ public class MainActivity extends AppCompatActivity {
             arrayList.add(namesList.get(i));
         }
 
-
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(arrayAdapter);
-
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,19 +71,15 @@ public class MainActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View customView = layoutInflater.inflate(R.layout.activity_popup,null);
                 textView = customView.findViewById(R.id.text);
-
                 textView.setText(description.get(position));
 
                 mPopupWindow = new PopupWindow(customView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
                 mPopupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
 
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        // Do something after 5s = 5000ms
                         mPopupWindow.dismiss();
                     }
                 }, 1000);
